@@ -1,0 +1,71 @@
+{
+  "name": "daskeyboardqkeystate",
+  "authorName": "Eric Haughee",
+  "authorUrl": "https://github.com/ehaughee",
+  "issuesUrl": "https://github.com/ehaughee/daskeyboardqkeystate/issues",
+  "homePageUrl": "https://github.com/ehaughee",
+  "licenseUrl": "https://opensource.org/licenses/MIT",
+  "changelogUrl": "CHANGELOG.md",
+  "readMeUrl": "README.md",
+  "readMeEndUserUrl": "README.md",
+  "displayName": "Key State",
+  "publisher": "Eric Haughee",
+  "version": "1.0.0",
+  "description": "Key State Monitor",
+  "developerRepoUrl": "https://github.com/ehaughee/daskeyboardqkeystate",
+  "icon": "assets/icon.png",
+  "isSingleton": false,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "daskeyboard-applet": "^2.11.4",
+    "node-powershell": "^4.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.13.0"
+  },
+  "qConfig": {
+    "geometry": {
+      "width": 1,
+      "height": 1,
+      "defaults": {
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    "questions": [{
+      "key": "key",
+      "label": "Key",
+      "placeholder": "Select a key to monitor",
+      "help": "Select the key whose toggle status you would like to monitor.",
+      "required": true,
+      "controlType": "dropdown",
+      "dynamic": true
+    }, {
+      "key": "colorOn",
+      "label": "Color When On",
+      "required": true,
+      "value": "#FF0000",
+      "controlType": "color"
+    }, {
+      "key": "colorOff",
+      "label": "Color When Off",
+      "required": true,
+      "value": "#00FF00",
+      "controlType": "color"
+    }]
+  },
+  "engines": {
+    "das-keyboard-q": "3.0.0"
+  }
+}
