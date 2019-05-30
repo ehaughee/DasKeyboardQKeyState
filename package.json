@@ -63,6 +63,12 @@
       "required": true,
       "value": "#00FF00",
       "controlType": "color"
+    }, {
+      "key": "pollingInterval",
+      "label": "Polling Interval (milliseconds)",
+      "help": "How often the applet will check the status of the configured key.  Lower means quicker color changes in response to ket status changes but also more CPU usage.  The default is 1000ms or 1 second.",
+      "placeholder": "1000",
+      "controlType": "textbox"
     }]
   },
   "engines": {

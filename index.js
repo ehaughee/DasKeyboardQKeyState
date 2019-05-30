@@ -8,7 +8,7 @@ class KeyState extends q.DesktopApp {
   constructor() {
     super();
     KeyState.log('CTOR');
-    this.pollingInterval = 1000;
+    this.pollingInterval = this.config.pollingInterval || 1000;
 
     this.colors = {
       on: this.config.colorOn || '#FF0000',
