@@ -36,7 +36,7 @@ class KeyState extends q.DesktopApp {
       on: this.config.colorOn || '#FF0000',
       off: this.config.colorOff || '#00FF00',
     };
-    const key = this.config.key || this.keys.CapsLock.code;
+    var key = this.config.key || this.keys.CapsLock.code;
 
     try {
       var enabled = cmk.getModifierState(key);
@@ -50,10 +50,6 @@ class KeyState extends q.DesktopApp {
       });    
     } catch(err){
       KeyState.log('error');
-    }
-
-    if (cmk.getModifierState(key.toLowerCase())){
-      return new q.Signal({})
     }
   }
 
