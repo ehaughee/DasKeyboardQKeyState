@@ -36,10 +36,10 @@ class KeyState extends q.DesktopApp {
       on: this.config.colorOn || '#FF0000',
       off: this.config.colorOff || '#00FF00',
     };
-    var key = this.config.key || this.keys.CapsLock.code;
+    let key = this.config.key || this.keys.CapsLock.code;
 
     try {
-      var enabled = cmk.getModifierState(key);
+      const enabled = cmk.getModifierState(key);
       KeyState.log(`${key} is ${enabled ? 'enabled' : 'disabled'}`);
       return new q.Signal({
         points: [
@@ -49,7 +49,7 @@ class KeyState extends q.DesktopApp {
         message: `${key} is ${enabled ? 'enabled' : 'disabled'}`,
       });    
     } catch(err){
-      KeyState.log('error');
+      KeyState.log(err, `error - ${err}`);
     }
   }
 
