@@ -22,8 +22,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "daskeyboard-applet": "^2.11.4",
-    "node-powershell": "^4.0.0"
+    "control-modifier-keys": "^1.0.3",
+    "daskeyboard-applet": "^2.11.4"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
@@ -43,33 +43,38 @@
         }
       }
     },
-    "questions": [{
-      "key": "key",
-      "label": "Key",
-      "placeholder": "Select a key to monitor",
-      "help": "Select the key whose toggle status you would like to monitor.",
-      "required": true,
-      "controlType": "dropdown",
-      "dynamic": true
-    }, {
-      "key": "colorOn",
-      "label": "Color When On",
-      "required": true,
-      "value": "#FF0000",
-      "controlType": "color"
-    }, {
-      "key": "colorOff",
-      "label": "Color When Off",
-      "required": true,
-      "value": "#00FF00",
-      "controlType": "color"
-    }, {
-      "key": "pollingInterval",
-      "label": "Polling Interval (milliseconds)",
-      "help": "How often the applet will check the status of the configured key.  Lower means quicker color changes in response to ket status changes but also more CPU usage.  The default is 1000ms or 1 second.",
-      "placeholder": "1000",
-      "controlType": "textbox"
-    }]
+    "questions": [
+      {
+        "key": "key",
+        "label": "Key",
+        "placeholder": "Select a key to monitor",
+        "help": "Select the key whose toggle status you would like to monitor.",
+        "required": true,
+        "controlType": "dropdown",
+        "dynamic": true
+      },
+      {
+        "key": "colorOn",
+        "label": "Color When On",
+        "required": true,
+        "value": "#FF0000",
+        "controlType": "color"
+      },
+      {
+        "key": "colorOff",
+        "label": "Color When Off",
+        "required": true,
+        "value": "#00FF00",
+        "controlType": "color"
+      },
+      {
+        "key": "pollingInterval",
+        "label": "Polling Interval (milliseconds)",
+        "help": "How often the applet will check the status of the configured key.  Lower means quicker color changes in response to ket status changes but also more CPU usage.  The default is 1000ms or 1 second.",
+        "placeholder": "1000",
+        "controlType": "textbox"
+      }
+    ]
   },
   "engines": {
     "das-keyboard-q": "3.0.0"

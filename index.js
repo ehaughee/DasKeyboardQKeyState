@@ -20,8 +20,8 @@ class KeyState extends q.DesktopApp {
       },
       ScrollLock: {
         code: 'scrolllock',
-        display: 'Scroll Lock'
-      }
+        display: 'Scroll Lock',
+      },
     };
 
     KeyState.log('Key State ready to go!');
@@ -36,7 +36,7 @@ class KeyState extends q.DesktopApp {
       on: this.config.colorOn || '#FF0000',
       off: this.config.colorOff || '#00FF00',
     };
-    let key = this.config.key || this.keys.CapsLock.code;
+    const key = this.config.key || this.keys.CapsLock.code;
 
     try {
       const enabled = cmk.getModifierState(key);
@@ -47,9 +47,10 @@ class KeyState extends q.DesktopApp {
         ],
         name: `${key} State`,
         message: `${key} is ${enabled ? 'enabled' : 'disabled'}`,
-      });    
-    } catch(err){
+      });
+    } catch (err) {
       KeyState.log(err, `error - ${err}`);
+      throw new Error(err);
     }
   }
 
