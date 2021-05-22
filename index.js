@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 const q = require('daskeyboard-applet');
-const Shell = require('node-powershell');
+const cmk = require('control-modifier-keys');
 
 const { logger } = q;
 
@@ -8,22 +8,20 @@ class KeyState extends q.DesktopApp {
   constructor() {
     super();
     KeyState.log('CTOR');
-    this.pollingInterval = this.config.pollingInterval || 1000;
-
-    this.colors = {
-      on: this.config.colorOn || '#FF0000',
-      off: this.config.colorOff || '#00FF00',
-    };
 
     this.keys = {
       NumLock: {
-        code: 'NumberLock',
+        code: 'numlock',
         display: 'Num Lock',
       },
       CapsLock: {
-        code: 'CapsLock',
+        code: 'capslock',
         display: 'Caps Lock',
       },
+      ScrollLock: {
+        code: 'scrolllock',
+        display: 'Scroll Lock'
+      }
     };
 
     KeyState.log('Key State ready to go!');
@@ -32,22 +30,27 @@ class KeyState extends q.DesktopApp {
   // eslint-disable-next-line class-methods-use-this
   async run() {
     KeyState.log('Running...');
-    const key = this.config.key || this.keys.CapsLock.code;
-    return KeyState.getKeyStatus(key)
-      .then((status) => {
-        const enabled = status === 'True';
-        return new q.Signal({
-          points: [
-            [this.generatePoint(enabled)],
-          ],
-          name: `${key} State`,
-          message: `${key} is ${enabled ? 'enabled' : 'disabled'}`,
-        });
-      }).catch((err) => {
-        // TODO: Introduce an error signal
-        // https://www.daskeyboard.io/applet-development/signals#signal-options
-        KeyState.log(err, 'error');
-      });
+
+    this.pollingInterval = this.config.pollingInterval || 1000;
+    this.colors = {
+      on: this.config.colorOn || '#FF0000',
+      off: this.config.colorOff || '#00FF00',
+    };
+    let key = this.config.key || this.keys.CapsLock.code;
+
+    try {
+      const enabled = cmk.getModifierState(key);
+      KeyState.log(`${key} is ${enabled ? 'enabled' : 'disabled'}`);
+      return new q.Signal({
+        points: [
+          [this.generatePoint(enabled)],
+        ],
+        name: `${key} State`,
+        message: `${key} is ${enabled ? 'enabled' : 'disabled'}`,
+      });    
+    } catch(err){
+      KeyState.log(err, `error - ${err}`);
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -61,28 +64,6 @@ class KeyState extends q.DesktopApp {
       default:
         throw new Error(`Unsupported questionKey: ${questionKey}`);
     }
-  }
-
-  static async getKeyStatus(key) {
-    KeyState.log(`Getting ${key} key status...`);
-    return new Promise((resolve) => {
-      const ps = new Shell({
-        executionPolicy: 'Bypass',
-        noProfile: true,
-      });
-
-      ps.addCommand(`[console]::${key}`);
-      ps.invoke()
-        .then((output) => {
-          KeyState.log(`Got ${key} key status: ${output.trim()}`);
-          ps.dispose();
-          resolve(output.trim());
-        })
-        .catch((err) => {
-          ps.dispose();
-          throw err;
-        });
-    });
   }
 
   generatePoint(on) {
